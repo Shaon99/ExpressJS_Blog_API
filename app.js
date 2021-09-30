@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
+
 
 const postsRoute = require('./routes/postRoute');
 
@@ -17,6 +19,8 @@ mongoose.connect(process.env.MONGO_CONNECTION_STRING,{
 }).then(()=> console.log("database connected successfully")).catch((err)=>console.log(err));
 
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname,"public")));
 
 //ROUTES
 app.use('/posts',postsRoute);
